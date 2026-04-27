@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI-CD Pipeline
 
 on:
   push:
@@ -43,3 +43,20 @@ jobs:
 
       - name: Push versioned image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/internal-utility-app:v1.0.0
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/internal-utility-app:latest
+            docker stop app || true
+            docker rm app || true
+            docker run -d -p 80:5000 --name app ${{ secrets.DOCKER_USERNAME }}/internal-utility-app:latest
