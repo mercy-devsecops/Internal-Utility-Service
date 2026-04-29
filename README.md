@@ -1,14 +1,10 @@
-# Internal Utility Service
-
-Run locally:
-
-pip install -r requirements.txt
-python app.py
-
-Runs on port 5000.
-
-
 Internal Utility Service – Production Deployment
+
+
+## 🌐 Live Application
+[🚀 View Live App](https://internal-utility-app.duckdns.org)
+
+
 📌 Overview
 
 This project transforms a locally-run Flask application into a production-ready system using Docker, CI/CD, and AWS EC2 with HTTPS.
@@ -28,10 +24,6 @@ This project transforms a locally-run Flask application into a production-ready 
 
 1 Multi-stage build for smaller image size
 2 Non-root user for security
-
-3 HEALTHCHECK implemented:
-
-HEALTHCHECK CMD curl --fail http://localhost:5000 || exit 1
 
 
 🔁 CI/CD Pipeline
