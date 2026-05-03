@@ -1,98 +1,107 @@
-Internal Utility Service – Production Deployment
-
+# 🚀 Production-Ready Containerized Web Application with Secure CI/CD
 
 ## 🌐 Live Application
-[🚀 View Live App](https://internal-utility-app.duckdns.org)
+
+🔗 View Live App: https://internal-utility-app.duckdns.org
+
+## 📌 Overview
+
+This project transforms a locally developed Flask application into a secure, production-ready system using Docker, AWS EC2, and automated CI/CD pipelines.
+
+It focuses on reliability, security, and zero-downtime deployment strategies.
 
 
-📌 Overview
+## 🧱 Architecture
 
-This project transforms a locally-run Flask application into a production-ready system using Docker, CI/CD, and AWS EC2 with HTTPS.
-
-
-🧱 Architecture
-
-1 GitHub → CI/CD pipeline
-2 Docker Hub → Image storage
-3 AWS EC2 → Hosting
-4 Nginx → Reverse proxy
-5 Let’s Encrypt → HTTPS
-8 DuckDNS → Domain
+* **GitHub** → Source control & CI/CD pipeline
+* **Docker Hub** → Image registry
+* **AWS EC2** → Application hosting
+* **Nginx** → Reverse proxy layer
+* **Let’s Encrypt** → HTTPS encryption
+* **DuckDNS** → Domain management
 
 
-🐳 Docker Strategy
+## 🐳 Containerization Strategy
 
-1 Multi-stage build for smaller image size
-2 Non-root user for security
+* Multi-stage Docker build to reduce image size
+* Runs as non-root user for improved security
+* HEALTHCHECK configured for runtime validation
 
 
-🔁 CI/CD Pipeline
+## 🔁 CI/CD Pipeline
 
-Implemented using GitHub Actions:
+Automated using GitHub Actions:
 
 Steps:
 
-1 Run tests (pytest)
-2 Build Docker image
-3 Push to Docker Hub
-4 Deploy to EC2 via SSH
+1. Run tests (pytest)
+2. Build Docker image
+3. Push image to Docker Hub
+4. Deploy automatically to EC2
 
-Deployment is fully automated on push to main.
-
-
-🔐 Secrets Management
-
-1 GitHub Secrets → CI/CD credentials
-2 AWS EC2 runtime → environment variables
-3 No secrets stored in:
-    i. source code
-    ii. Dockerfile
-    iii. Git history
+✅ Deployment triggered on push to `main`
+🚫 Failed tests block deployment
 
 
-🌐 Deployment
-1 App runs inside Docker on EC2 (port 5000)
-2 Nginx proxies traffic → container
-3 HTTPS enabled using Let’s Encrypt
-4 Domain: internal-utility-app.duckdns.org
+## 🔐 Secrets Management
+
+* GitHub Secrets → CI/CD credentials
+* AWS EC2 environment variables → runtime secrets
+* No secrets stored in source code, Dockerfile, or history
 
 
-🔄 Update Strategy
+## 🌐 Deployment
+
+* Application runs inside Docker container on EC2
+* Nginx routes traffic to the container
+* HTTPS enabled using Let’s Encrypt
+* HTTP automatically redirects to HTTPS
+
+
+## 🔄 Deployment Strategy
 
 Rolling update simulation:
 
-1 Pull new image
-2 Stop old container
-3 Start new container
+1. Pull new image
+2. Stop old container
+3. Start new container
 
 
-❤️ Health Checks
-1 Docker HEALTHCHECK configured
-2 Verified using: docker ps
+## ❤️ Health Monitoring
+
+* Docker HEALTHCHECK configured
+* Auto-restart enabled (`--restart always`)
+* Container recovers automatically from failure
 
 
-🔁 Auto Restart
---restart always
+## ⚠️ Failure Handling
 
-Ensures container recovers from crashes.
-
-
-⚠️ Failure Simulation
-1 Test failure → blocks deployment
-2 Container stop → auto restart
-3 Missing secret → deployment fails
+* Test failures block deployment
+* Missing secrets prevent startup
+* Container crash triggers auto-restart
 
 
-📈 Future Improvements
-1 Kubernetes deployment
-2 Load balancer
-3 Multiple EC2 instances
+## 📈 Future Improvements
+
+* Kubernetes-based deployment
+* Load balancing across multiple instances
+* Horizontal scaling
 
 
+## 📄 Documentation
+
+Detailed engineering decisions, architecture diagrams, and security reasoning:
+https://docs.google.com/document/d/1Fj4snFdcg6vaajU0M576k8Ms6SdF9mC9hSNSbmcr5HA/edit?usp=sharing
 
 
+## 🎯 Key Outcomes
 
-THIS MY SECOND PROJECT BY THE WAY, I'M IMPROVING MASSIVELY.
+* Fully automated CI/CD pipeline
+* Secure secrets management
+* Production-grade deployment on AWS
+* HTTPS-enabled system with reverse proxy
+* Fault-tolerant container behavior
+
 
 
 
